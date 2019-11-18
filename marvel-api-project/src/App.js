@@ -6,7 +6,8 @@ import {
   Jumbotron,
   Button,
 } from 'react-bootstrap'
-const data = {
+ 
+const comicData = {
   "code": 200,
   "status": "Ok",
   "copyright": "© 2019 MARVEL",
@@ -187,45 +188,21 @@ const data = {
 }
 
 class App extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      recipes: [], // Keeps track of our list of recipes
-      searchValue: '', // Its a controlled form input
-      error: null // If we get an error from the API request, it gets put here
-    }
-  }
 
-  componentDidMount = () =>{
-    this.getRecipes() //Kicks off initial list of recipes
-  }
-
-  search = ()=>{
-    this.getRecipes(this.state.searchValue) // When a user clicks 'search', re-send the request to the api, with search values
-  }
-
-  getRecipes = (q)=>{ //Method to query the API
-    this.setState({ recipes: [] }) //Clears the recipe list
-    const apiKey='a6894f29755de2438c2b9fb553b2931d'
-    var searchUrl = `https://www.food2fork.com/api/search?key=${apiKey}`
-    if(q){ //if user has entered a search value, we add it to the request URL
-      searchUrl = `${searchUrl}&q=${q}`
-    }
-    fetch(searchUrl)  //Fetch returns a promise
-    .then((resp)=> {
-      if(resp.status !== 200){ throw({message: "Could not perform search. Please try again."}) }
-      return resp.json() //We need to grab the JSON from the response
-    })
-    .then( (payload) => {
-      const{ recipes } = payload
-      this.setState({recipes}) //Finally, we can add the found recipes to our list, triggering a re-render
-    })
-    .catch((error) => this.setState({error}))
-  }
   render(){
     return (
       <div className="App">
-      
+        <Jumbotron>
+          <h1>{comicData.data.results[0].title}</h1>
+          <p>
+          This is a simple hero unit, a simple jumbotron-style component for calling
+          extra attention to featured content or information.
+          </p>
+          <p>
+          <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+       
       </div>
     );
   }
